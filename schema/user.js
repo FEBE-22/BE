@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     tanggal_lahir: String,
     email: String,
     password: String,
-    alamat: String
+    alamat: String,
+    role: String
 });
 
 module.exports = mongoose.model("user", userSchema);

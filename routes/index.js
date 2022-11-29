@@ -3,8 +3,14 @@ const router = express.Router()
 
 const userRouter = require('./user.router');
 const dokterRouter = require('./dokter.router');
+const rikesRouter = require('./rikes.router');
+const pembayaranRouter = require('./pembayaran.router');
+// const dokFavRouter = require('./dokFav.router');
 
 router.use("/user", userRouter);
 router.use("/dokter", dokterRouter);
+router.use("/rikes", rikesRouter);
+router.use("/pembayaran", pembayaranRouter);
+// router.use("/dokfav", dokFavRouter);
 
 module.exports = router

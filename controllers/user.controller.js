@@ -29,7 +29,7 @@ module.exports = {
     },
 
     updateProfil: async (req, res) => {
-        const { nama_depan, nama_belakang, no_telp, jenis_kelamin, tempat_lahir, tanggal_lahir, email, alamat } = req.body;
+        const { nama_depan, nama_belakang, no_telp, jenis_kelamin, tempat_lahir, tanggal_lahir, email, alamat } = req.body; //ganti password?
 
         try {
             const data = await userSchema.findById(req.query.id);
@@ -47,33 +47,58 @@ module.exports = {
 
                 res.status(200).json({
                     data: update,
-                    message: 'Update data jadwal is success'
+                    message: 'Update data user is success'
                 })
             } else {
                 res.status(400).json({
                     success: false,
                     data: null,
-                    message: 'Data failed to update'
+                    message: 'Data User Failed to Update'
                 })
 
             }
         } catch (error) {
-            res.send(error)
+            res.status(400).json({
+                message: 'Update User Failed!!'
+            })
         }
     },
 
     register: async (req, res) => {
         const { nama_depan, nama_belakang, email, password } = req.body;
+        let data;
 
         try {
             const hash = await bcrypt.hash(password, 10);
 
-            const data = await userSchema.create({
-                nama_depan: nama_depan,
-                nama_belakang: nama_belakang,
+            const findEmail = await userSchema.findOne({
                 email: email,
-                password: hash
             });
+
+            if(findEmail){
+                return res.status(400).json({
+                    success: false,
+                    data: findEmail,
+                    message: 'Email sudah digunakan'
+                })
+            }
+            if(email.includes("admin")){
+                data = await userSchema.create({
+                    nama_depan: nama_depan,
+                    nama_belakang: nama_belakang,
+                    email: email,
+                    password: hash,
+                    role: 'admin'
+                });
+            } else {
+                data = await userSchema.create({
+                    nama_depan: nama_depan,
+                    nama_belakang: nama_belakang,
+                    email: email,
+                    password: hash,
+                    role: 'user'
+                });
+            }
 
             if (data) {
                 res.status(200).json({
@@ -104,36 +129,46 @@ module.exports = {
                 email: email,
             });
 
-            if (checkEmail) {
-                const checkPass = await bcrypt.compare(password, checkEmail.password);
+        if (checkEmail){
+            const checkPass = await bcrypt.compare(password, checkEmail.password);
 
-                if (checkPass) {
-                    const token = jsonwebtoken.sign({
-                        email: checkEmail.email,
-                    }, process.env.JWT_KEY);
-
-                    // res.send(token)
+            if (checkPass) {
+                const token = jsonwebtoken.sign({
+                    email: checkEmail.email,
+                }, process.env.JWT_KEY );
+                
+                if(checkEmail.role == 'admin'){
                     res.status(200).json({
                         success: true,
                         token: token,
-                        message: 'login Successfully..'
+                        message: 'login Successfully..',
+                        role: 'admin'
                     })
-                } else {
-                    res.status(400).json({
-                        success: false,
-                        message: 'Password wrong'
+                } else if(checkEmail.role == 'user'){
+                    res.status(200).json({
+                        success: true,
+                        token: token,
+                        message: 'login Successfully..',
+                        role: 'user'
                     })
                 }
-            } else {
+                
+            } else{
                 res.status(400).json({
-                    message: 'Username wrong'
+                    success: false,
+                    message: 'Password wrong'
                 })
             }
+        } else{
+            res.status(400).json({
+                message: 'Username wrong'
+            })
+        }
         } catch (error) {
             res.status(400).json({
                 message: 'Login failed!!'
             })
-        }
+            }
 
     },
 }
