@@ -114,8 +114,10 @@ module.exports = {
                 })
             }
         } catch (error) {
-            res.status(400).json({
-                message: 'Register Failed!!'
+            return res.status(400).json({
+                success: false,
+                data: findEmail,
+                message: 'Email sudah digunakan'
             })
         }
 
