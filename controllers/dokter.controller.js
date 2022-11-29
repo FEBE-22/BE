@@ -57,7 +57,7 @@ module.exports = {
 
     getAllDokter: async (req, res) => {
         try {
-            const data = await dokterSchema.find({ }, 'nama spesialis pengalaman')
+            const data = await dokterSchema.find({})
 
             if (data) {
                 res.status(200).json({

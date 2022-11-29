@@ -10,7 +10,7 @@ app.use(cors());
 
 const allRoutes = require('./routes');
 
-mongoose 
+mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -21,11 +21,11 @@ mongoose
   .catch((err) => console.log(err));
 
 app.get("/", async (req, res) => {
-    res.send("Hello");
+  res.send("Hello");
 });
 
 app.listen(process.env.PORT, () => {
-    console.log(`Example app listening at http://localhost:${process.env.PORT}`);
-  })
+  console.log(`Example app listening at http://localhost:${process.env.PORT}`);
+})
 
 app.use(allRoutes)
