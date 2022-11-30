@@ -1,5 +1,4 @@
 const rikesSchema = require("../schema/rikes");
-const jsonwebtoken = require("jsonwebtoken");
 
 module.exports = {
    createRikes: async (req, res) => {

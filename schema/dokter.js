@@ -6,6 +6,10 @@ const dokterSchema = new mongoose.Schema({
     pengalaman: String,
     detail_info: String,
     harga: String,
+    id_jadwal: { type: mongoose.Schema.Types.ObjectId, ref: 'jadwal'}
+},
+{
+    collection: "dokter"
 });
 
 module.exports = mongoose.model("dokter", dokterSchema);

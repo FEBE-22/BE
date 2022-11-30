@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  requestPayment,
+  afterPayment
 } = require("../controllers/pembayaran.controller.js");
 
-router.post("/", requestPayment);
+router.post("/after", afterPayment);
 
 module.exports = router;
