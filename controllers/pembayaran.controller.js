@@ -1,10 +1,11 @@
-// const pembayaranSchema = require("../schema/pembayaran");
+const pembayaranSchema = require("../schema/pembayaran");
 const midtransClient = require('midtrans-client');
+const { v4: uuidv4 } = require('uuid');
 const jsonwebtoken = require("jsonwebtoken");
 
 module.exports = {
     requestPayment: async (req, res) => {
-        const { nama_dokter, spesialis, pengalaman, harga } = req.body;
+        const { id_user, id_dokter, total } = req.body;
 
         let snap = new midtransClient.Snap({
             // Set to true if you want Production Environment (accept real transaction).
@@ -12,31 +13,61 @@ module.exports = {
             serverKey : process.env.SERVER_MIDTRANS_KEY
         });
 
+        let randomId = uuidv4();
+
         let parameter = {
             transaction_details: {
-                order_id: "YOUR-ORDERID-123456",
-                gross_amount: harga
+                order_id: "user" + randomId,
+                gross_amount: total
             },
             credit_card:{
                 secure : true
             },
             customer_details: {
-                first_name: nama_dokter,
-                spesialis: spesialis,
-                pengalaman: pengalaman,
-                harga: harga
+                first_name: id_dokter,
+                id_user: id_user
             }
         };
 
         snap.createTransaction(parameter)
         .then((transaction)=>{
+            console.log("pembayaran sukses");
             // transaction token
             let transactionToken = transaction.token;
-            res.json({
-                token: transactionToken,
-                redirectURL: "https://app.sandbox.midtrans.com/snap/v2/vtweb/" + transactionToken
-            })
+            const data = pembayaranSchema.create({
+                id_dokter: id_dokter,
+                id_user: id_user,
+                total: total,
+                id_midtrans: parameter.transaction_details.order_id
+            });
+
+            if (data) {
+                res.status(200).json({
+                    success: true,
+                    token: transactionToken,
+                    redirectURL: "https://app.sandbox.midtrans.com/snap/v2/vtweb/" + transactionToken
+                    // message: 'You Have Successfully Created Doctor Data'
+                })
+            } else {
+                res.status(400).json({
+                    message: 'Pembayaran '
+                })
+            }
+
+            // res.json({
+            //     token: transactionToken,
+            //     redirectURL: "https://app.sandbox.midtrans.com/snap/v2/vtweb/" + transactionToken
+            // })
         });
     },
+
+    afterPayment: async (req, res) => {
+        const data = pembayaranSchema.create({
+            id_dokter: id_dokter,
+            id_user: id_user,
+            total: total,
+            id_midtrans: parameter.transaction_details.order_id
+        });
+    }
 
 }

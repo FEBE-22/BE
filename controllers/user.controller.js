@@ -6,7 +6,7 @@ module.exports = {
     getProfil: async (req, res) => {
         try {
             const data = await userSchema.findById(req.query.id);
-            // console.log(req.query.id);
+            
             if (data) {
                 res.status(200).json({
                     success: true,
@@ -136,7 +136,7 @@ module.exports = {
 
             if (checkPass) {
                 const token = jsonwebtoken.sign({
-                    email: checkEmail.email,
+                    email: checkEmail.email
                 }, process.env.JWT_KEY );
                 
                 if(checkEmail.role == 'admin'){
@@ -144,14 +144,24 @@ module.exports = {
                         success: true,
                         token: token,
                         message: 'login Successfully..',
-                        role: 'admin'
+                        id_user: checkEmail._id,
+                        role: 'admin',
+                        nama: checkEmail.nama_depan + ' ' + checkEmail.nama_belakang,
+                        nama_depan: checkEmail.nama_depan,
+                        nama_belakang: checkEmail.nama_belakang,
+                        email: checkEmail.email, 
                     })
                 } else if(checkEmail.role == 'user'){
                     res.status(200).json({
                         success: true,
                         token: token,
+                        id_user: checkEmail._id,
                         message: 'login Successfully..',
-                        role: 'user'
+                        role: 'user',
+                        nama: checkEmail.nama_depan + ' ' + checkEmail.nama_belakang,
+                        nama_depan: checkEmail.nama_depan,
+                        nama_belakang: checkEmail.nama_belakang,
+                        email: checkEmail.email, 
                     })
                 }
                 

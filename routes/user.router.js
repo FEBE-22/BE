@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const verifyToken = require("../verifyToken/verifyToken");
 
 const {
   register,
@@ -8,8 +9,8 @@ const {
   getProfil,
 } = require("../controllers/user.controller");
 
-router.get("/byId", getProfil);
-router.post("/byId", updateProfil);
+router.get("/byId", getProfil, verifyToken);
+router.post("/byId", updateProfil, verifyToken);
 router.post("/register", register);
 router.post("/login", login);
 
