@@ -5,24 +5,39 @@ module.exports = {
         const { riwayat_penyakit, berat_badan, tinggi_badan, golongan_darah, id_user } = req.body;
 
         try {
-            const data = await rikesSchema.create({
-                riwayat_penyakit: riwayat_penyakit,
-                berat_badan: berat_badan,
-                tinggi_badan: tinggi_badan,
-                golongan_darah: golongan_darah,
-                id_user: id_user
-            });
+            const dataFind = await rikesSchema.find({ id_user: id_user })
+            if (dataFind.length > 0){
+                const dataFind = await rikesSchema.findOneAndUpdate({ id_user: id_user }, {
+                    riwayat_penyakit: riwayat_penyakit,
+                    berat_badan: berat_badan,
+                    tinggi_badan: tinggi_badan,
+                    golongan_darah: golongan_darah,
+                })
 
-            if (data) {
                 res.status(200).json({
-                    success: true,
-                    data: data,
-                    message: 'You Have Successfully Created Health History'
+                    dataFind: dataFind,
+                    message: 'Update Data Health History is Success'
                 })
             } else {
-                res.status(400).json({
-                    message: 'Data Failed to Health History'
-                })
+                const data = await rikesSchema.create({
+                    riwayat_penyakit: riwayat_penyakit,
+                    berat_badan: berat_badan,
+                    tinggi_badan: tinggi_badan,
+                    golongan_darah: golongan_darah,
+                    id_user: id_user
+                });
+    
+                if (data) {
+                    res.status(200).json({
+                        success: true,
+                        data: data,
+                        message: 'You Have Successfully Created Health History'
+                    })
+                } else {
+                    res.status(400).json({
+                        message: 'Data Failed to Health History'
+                    })
+                }
             }
         } catch (error) {
             res.send(error)
@@ -31,7 +46,7 @@ module.exports = {
 
    getRikesById: async (req, res) => {
         try {
-            const data = await rikesSchema.findById(req.query.id).populate('id_user').exec((err, data) => {
+            const data = await rikesSchema.find().populate('id_user').exec((err, data) => {
             
             if(data){
                 res.status(200).json({
