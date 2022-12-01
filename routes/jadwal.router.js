@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const verifyToken = require("../verifyToken/verifyToken");
 
 const {
     createJadwal,
@@ -10,7 +9,7 @@ const {
     deleteJadwalById,
 } = require("../controllers/jadwal.controller.js");
 
-router.post("/", createJadwal, verifyToken);
+router.post("/", createJadwal);
 router.get("/", getAllJadwal);
 router.get("/byId", getJadwalById);
 router.post("/byId", updateJadwal);

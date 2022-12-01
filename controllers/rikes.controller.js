@@ -31,8 +31,8 @@ module.exports = {
 
    getRikesById: async (req, res) => {
         try {
-            const data = await rikesSchema.findById(req.query.id);
-            // console.log(req.query.id);
+            const data = await rikesSchema.findById(req.query.id).populate('id_user').exec((err, data) => {
+            
             if(data){
                 res.status(200).json({
                     success: true,
@@ -46,6 +46,7 @@ module.exports = {
                     message: 'Health History is Not Found.'
                 })
             }
+        })
         } catch (error) {
             res.status(400).json({
                 message: 'Get Health History By Id Failed!!'
