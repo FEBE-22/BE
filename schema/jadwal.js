@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const jadwalSchema = new mongoose.Schema({
-    hari_tanggal: String,
+    hari: String,
     waktu: String,
 })
 

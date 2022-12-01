@@ -1,13 +1,12 @@
 const jadwalSchema = require("../schema/jadwal");
-const jsonwebtoken = require("jsonwebtoken");
 
 module.exports = {
     createJadwal: async (req, res) => {
-        const { hari_tanggal, waktu } = req.body;
+        const { hari, waktu } = req.body;
 
         try {
             const data = await jadwalSchema.create({
-                hari_tanggal: hari_tanggal,
+                hari: hari,
                 waktu: waktu
             });
 
@@ -69,13 +68,13 @@ module.exports = {
     },
 
     updateJadwal: async (req, res) => {
-        const { hari_tanggal, waktu } = req.body;
+        const { hari, waktu } = req.body;
 
         try {
             const data = await jadwalSchema.findById(req.query.id);
 
             if (data) {
-                data.hari_tanggal = hari_tanggal;
+                data.hari = hari;
                 data.waktu = waktu;
 
                 const updateData = await data.save();

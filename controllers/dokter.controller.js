@@ -2,7 +2,7 @@ const dokterSchema = require("../schema/dokter");
 
 module.exports = {
     createDokter: async (req, res) => {
-        const { nama, spesialis, pengalaman, detail_info, harga, id_jadwal } = req.body; //id jadwal belum bisa
+        const { nama, spesialis, pengalaman, detail_info, harga, id_jadwal } = req.body; 
 
         try {
             const data = await dokterSchema.create({
@@ -32,8 +32,7 @@ module.exports = {
 
     getDokterById: async (req, res) => {
         try {
-            // const data = await dokterSchema.findById(req.query.id);
-            const data = await dokterSchema.find().populate('id_jadwal').exec((err, data) => {
+            const data = await dokterSchema.findById(req.query.id).populate('id_jadwal').exec((err, data) => {
             
             if (data) {
                 res.status(200).json({
@@ -59,7 +58,7 @@ module.exports = {
 
     getAllDokter: async (req, res) => {
         try {
-            const data = await dokterSchema.find({ }, 'nama spesialis pengalaman') // belum bisa 
+            const data = await dokterSchema.find({ }, 'nama spesialis pengalaman')
 
             if (data) {
                 res.status(200).json({
@@ -81,7 +80,7 @@ module.exports = {
     },
 
     updateDokter: async (req, res) => {
-        const { nama, spesialis, pengalaman, detail_info, harga } = req.body;
+        const { nama, spesialis, pengalaman, detail_info, harga, id_jadwal } = req.body;
         try {
             const data = await dokterSchema.findById(req.query.id);
             if(data){
@@ -89,7 +88,8 @@ module.exports = {
                 data.spesialis = spesialis
                 data.pengalaman = pengalaman
                 data.detail_info = detail_info
-                data.harga = harga
+                data.harga = harga,
+                data.id_jadwal = id_jadwal
                 const updateBooking = await data.save();
                 res.status(200).json({
                     data: updateBooking,

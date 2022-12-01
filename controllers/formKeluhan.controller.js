@@ -1,8 +1,7 @@
 const formKeluhanSchema = require("../schema/formKeluhan");
-const jsonwebtoken = require("jsonwebtoken");
 
 module.exports = {
-    inputDataForm: async (req, res) => { // input sama seperti create ??
+    inputDataForm: async (req, res) => { 
         const { nama_lengkap, email, keluhan } = req.body;
 
         try {

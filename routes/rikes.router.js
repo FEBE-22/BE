@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const verifyToken = require("../verifyToken/verifyToken");
 
 const {
   createRikes,
@@ -8,9 +9,9 @@ const {
   deleteRikes,
 } = require("../controllers/rikes.controller.js");
 
-router.post("/", createRikes);
-router.get("/byId", getRikesById);
-router.post("/byId", updateRikes);
-router.delete("/byId", deleteRikes);
+router.post("/", createRikes, verifyToken);
+router.get("/byId", getRikesById, verifyToken);
+router.post("/byId", updateRikes, verifyToken);
+router.delete("/byId", deleteRikes, verifyToken);
 
 module.exports = router;

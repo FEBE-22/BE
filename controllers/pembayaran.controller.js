@@ -1,7 +1,6 @@
 const pembayaranSchema = require("../schema/pembayaran");
 const midtransClient = require('midtrans-client');
 const { v4: uuidv4 } = require('uuid');
-const jsonwebtoken = require("jsonwebtoken");
 
 module.exports = {
     requestPayment: async (req, res) => {
@@ -31,7 +30,6 @@ module.exports = {
 
         snap.createTransaction(parameter)
         .then((transaction)=>{
-            console.log("pembayaran sukses");
             // transaction token
             let transactionToken = transaction.token;
             const data = pembayaranSchema.create({
@@ -46,7 +44,6 @@ module.exports = {
                     success: true,
                     token: transactionToken,
                     redirectURL: "https://app.sandbox.midtrans.com/snap/v2/vtweb/" + transactionToken
-                    // message: 'You Have Successfully Created Doctor Data'
                 })
             } else {
                 res.status(400).json({
@@ -60,14 +57,5 @@ module.exports = {
             // })
         });
     },
-
-    afterPayment: async (req, res) => {
-        const data = pembayaranSchema.create({
-            id_dokter: id_dokter,
-            id_user: id_user,
-            total: total,
-            id_midtrans: parameter.transaction_details.order_id
-        });
-    }
 
 }
