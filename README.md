@@ -5,7 +5,7 @@
 ## Authentication
 
 All API except login registration must use this authentication.
-**Request:**
+_Request:_
 
 - Header:
   X-Api-Key : "Your Secret Api Key"
@@ -14,7 +14,7 @@ All API except login registration must use this authentication.
 
 ## Registration
 
-**Request:**
+_Request:_
 
 - Method: POST
 - Endpoint: /user/regis
@@ -32,7 +32,7 @@ All API except login registration must use this authentication.
   }
 ```
 
-**Response**
+_Response_
 
 ```
 {
@@ -54,7 +54,7 @@ All API except login registration must use this authentication.
 
 ## Login
 
-**Request:**
+_Request:_
 
 - Method: POST
 - Endpoint: /user/login
@@ -70,7 +70,7 @@ All API except login registration must use this authentication.
   }
 ```
 
-**Response**
+_Response_
 
 ```
 {
@@ -85,7 +85,7 @@ All API except login registration must use this authentication.
 
 ## Get Profil
 
-**Request:**
+_Request:_
 
 - Method: GET
 - Endpoint: /user/byId
@@ -94,7 +94,7 @@ All API except login registration must use this authentication.
   - Accept: Application/json
   - Authorization : bearer [jwt]
 
-**Response**
+_Response_
 
 ```
 {
@@ -116,7 +116,7 @@ All API except login registration must use this authentication.
 
 ## Update Profil
 
-**Request:**
+_Request:_
 
 - Method: POST
 - Endpoint: /user/byId
@@ -139,7 +139,7 @@ All API except login registration must use this authentication.
 }
 ```
 
-**Response**
+_Response_
 
 ```
 {
@@ -165,7 +165,7 @@ All API except login registration must use this authentication.
 
 ## Create Dokter
 
-**Request:**
+_Request:_
 
 - Method: POST
 - Endpoint: /dokter
@@ -185,7 +185,7 @@ All API except login registration must use this authentication.
 }
 ```
 
-**Response**
+_Response_
 
 ```
 {
@@ -207,7 +207,7 @@ All API except login registration must use this authentication.
 
 ## Get All Dokter
 
-**Request:**
+_Request:_
 
 - Method: GET
 - Endpoint: /dokter
@@ -216,7 +216,7 @@ All API except login registration must use this authentication.
   - Accept: Application/json
   - Authorization : bearer [jwt]
 
-**Response**
+_Response_
 
 ```
 {
@@ -239,7 +239,7 @@ All API except login registration must use this authentication.
 
 ## Get Dokter By Id
 
-**Request:**
+_Request:_
 
 - Method: GET
 - Endpoint: /dokter/byId
@@ -248,7 +248,7 @@ All API except login registration must use this authentication.
   - Accept: Application/json
   - Authorization : bearer [jwt]
 
-**Response**
+_Response_
 
 ```
 {
@@ -268,4 +268,569 @@ All API except login registration must use this authentication.
 
 ---
 
-##
+## Create Riwayat Kesehatan
+
+_Request:_
+
+- Method: POST
+- Endpoint: /rikes
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+- Body
+
+```
+{
+    "riwayat_penyakit": "Anemia",
+    "berat_badan": "42",
+    "tinggi_badan": "150",
+    "golongan_darah": "AB",
+    "id_user": "638805bb61b453f547dd0ff5"
+}
+```
+
+_Response_
+
+```
+{
+  "success": true,
+  "data": {
+    "riwayat_penyakit": "Anemia",
+    "berat_badan": 42,
+    "tinggi_badan": 150,
+    "golongan_darah": "AB",
+    "id_user": "638805bb61b453f547dd0ff5",
+    "_id": "638814693a3ed99fcbf27efe",
+    "__v": 0
+  },
+  "message": "You Have Successfully Created Health History"
+}
+```
+
+---
+
+## Get Riwayat Kesehatan By Id
+
+_Request:_
+
+- Method: POST
+- Endpoint: /rikes/byId
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+
+_Response_
+
+```
+{
+  "success": true,
+  "data": {
+    "_id": "638814693a3ed99fcbf27efe",
+    "riwayat_penyakit": "Anemia",
+    "berat_badan": 42,
+    "tinggi_badan": 150,
+    "golongan_darah": "AB",
+    "id_user": {
+      "_id": "638805bb61b453f547dd0ff5",
+      "nama_depan": "Sofi",
+      "nama_belakang": "Yulianti",
+      "email": "sofi@gmail.com",
+      "password": "$2b$10$w5FzNtbISyLxdRbrIQVJYOLMZw3RbJ5rY.zyQrX2bv//RHD7jFMcO",
+      "role": "user",
+      "__v": 0
+    },
+    "__v": 0
+  },
+  "message": "Health History is Get Successfully"
+}
+```
+
+---
+
+## Update Riwayat Kesehatan
+
+_Request:_
+
+- Method: POST
+- Endpoint: /rikes/byId
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+- Body
+
+```
+{
+    "riwayat_penyakit": "Magh",
+    "berat_badan": "48",
+    "tinggi_badan": "155",
+    "golongan_darah": "B",
+    "id_user": "63815449b6b60c8a94c219d3"
+}
+```
+
+_Response_
+
+```
+{
+  "data": {
+    "_id": "63834c38daf34a5cdb962a34",
+    "riwayat_penyakit": "Magh",
+    "berat_badan": 48,
+    "tinggi_badan": 155,
+    "golongan_darah": "B",
+    "id_user": "63815449b6b60c8a94c219d3",
+    "__v": 0
+  },
+  "message": "Update Data Health History is Success"
+}
+```
+
+---
+
+## Delete Riwayat Kesehatan
+
+_Request:_
+
+- Method: DELETE
+- Endpoint: /rikes/byId
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+
+_Response_
+
+```
+{
+  "success": true,
+  "data": {
+    "_id": "638815e6fec9b966e73765f9",
+    "riwayat_penyakit": "Anemia",
+    "berat_badan": 42,
+    "tinggi_badan": 150,
+    "golongan_darah": "-",
+    "id_user": "638805bb61b453f547dd0ff5",
+    "__v": 0
+  },
+  "message": "Health history deleted successfully"
+}
+```
+
+---
+
+## Create Keluhan Web-Home
+
+_Request:_
+
+- Method: POST
+- Endpoint: /home
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+- Body
+
+```
+{
+    "nama_lengkap": "Sri",
+    "email": "Sri@gmail.com",
+    "keluhan": "Sangat Bagus Mantap"
+}
+```
+
+_Response_
+
+```
+{
+  "success": true,
+  "Message": "Keluhan anda terkirim"
+}
+```
+
+---
+
+## Pembayaran
+
+_Request:_
+
+- Method: POST
+- Endpoint: /pembayaran
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+- Body
+
+```
+{
+    "id_user": "638805bb61b453f547dd0ff5",
+    "id_dokter": "638809bdbf0bc501f380f786",
+    "total": "269000"
+}
+```
+
+_Response_
+
+```
+{
+  "success": true,
+  "token": "4a74c0e9-8ff8-4bfa-8d9a-5fcaa9577162",
+  "redirectURL": "https://app.sandbox.midtrans.com/snap/v2/vtweb/4a74c0e9-8ff8-4bfa-8d9a-5fcaa9577162"
+}
+```
+
+---
+
+## Update Dokter
+
+_Request:_
+
+- Method: POST
+- Endpoint: /dokter/byId
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+- Body
+
+```
+{
+    "nama": "Drg. Aan Afrianto",
+    "spesialis": "Sp. Gigi",
+    "pengalaman": "17 th",
+    "detail_info": "Drg. Aan Afrianto adalah Dokter Gigi yang aktif melayani pasien di FEBE 22 Klinik. Drg. Aan Afrianto mendapatkan gelar Kedokteran Gigi setelah menamatkan pendidikan di Universitas Gadjah Mada.",
+    "harga": "150000",
+    "id_jadwal": "63880e2f70631fb1393aab16"
+}
+```
+
+_Response_
+
+```
+{
+  "data": {
+    "_id": "638808ff29204d8c563b7d2e",
+    "nama": "Drg. Aan Afrianto",
+    "spesialis": "Sp. Gigi",
+    "pengalaman": "17 th",
+    "detail_info": "Drg. Aan Afrianto adalah Dokter Gigi yang aktif melayani pasien di FEBE 22 Klinik. Drg. Aan Afrianto mendapatkan gelar Kedokteran Gigi setelah menamatkan pendidikan di Universitas Gadjah Mada.",
+    "harga": "150000",
+    "id_jadwal": "63880e2f70631fb1393aab16",
+    "__v": 0
+  },
+  "message": "The Doctor Data has been Successfully Updated"
+}
+```
+
+---
+
+## Delete Dokter
+
+_Request:_
+
+- Method: DELETE
+- Endpoint: /dokter/byId
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+
+_Response_
+
+```
+{
+  "success": true,
+  "data": {
+    "_id": "63881299bf0bc501f380f78a",
+    "nama": "Dr. A. D. Pasaribu, Sp.A",
+    "spesialis": "Sp. Anak",
+    "pengalaman": "31 Tahun",
+    "detail_info": "D",
+    "harga": "Rp. 269000",
+    "id_jadwal": "6386ded921b9b04c75203085",
+    "__v": 0
+  },
+  "message": "Doctor Data is Deleted Successfully"
+}
+```
+
+---
+
+## Create Jadwal
+
+_Request:_
+
+- Method: POST
+- Endpoint: /jadwal
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+- Body
+
+```
+{
+    "hari": "Minggu",
+    "waktu": "09.00-20.00"
+}
+```
+
+_Response_
+
+```
+{
+  "success": true,
+  "data": {
+    "hari": "Minggu",
+    "waktu": "09.00-20.00",
+    "_id": "63880e6770631fb1393aab1e",
+    "__v": 0
+  },
+  "message": "You have successfully create jadwal"
+}
+```
+
+---
+
+## Get All Jadwal
+
+_Request:_
+
+- Method: GET
+- Endpoint: /jadwal
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+
+_Response_
+
+```
+{
+  "data": [
+    {
+      "_id": "6386ded921b9b04c75203085",
+      "hari_tanggal": "Senin",
+      "waktu": "09.00-12.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880d3270631fb1393aaaf8",
+      "hari": "Senin",
+      "waktu": "07.00-09.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880d4470631fb1393aaafa",
+      "hari": "Senin",
+      "waktu": "13.00-15.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880d5e70631fb1393aaafc",
+      "hari": "Senin",
+      "waktu": "15.00-17.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880d7670631fb1393aaafe",
+      "hari": "Senin",
+      "waktu": "19.00-21.30",
+      "__v": 0
+    },
+    {
+      "_id": "63880d8d70631fb1393aab00",
+      "hari": "Selasa",
+      "waktu": "07.00-11.30",
+      "__v": 0
+    },
+    {
+      "_id": "63880da270631fb1393aab02",
+      "hari": "Selasa",
+      "waktu": "13.00-17.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880db170631fb1393aab04",
+      "hari": "Selasa",
+      "waktu": "18.3.00-22.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880db470631fb1393aab06",
+      "hari": "Selasa",
+      "waktu": "18.30.00-22.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880dba70631fb1393aab08",
+      "hari": "Selasa",
+      "waktu": "18.30-22.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880dd870631fb1393aab0a",
+      "hari": "Rabu",
+      "waktu": "07.00-12.30",
+      "__v": 0
+    },
+    {
+      "_id": "63880de570631fb1393aab0c",
+      "hari": "Rabu",
+      "waktu": "13.00-17.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880df170631fb1393aab0e",
+      "hari": "Rabu",
+      "waktu": "19.00-22.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880e0f70631fb1393aab10",
+      "hari": "Kamis",
+      "waktu": "07.00-12.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880e1670631fb1393aab12",
+      "hari": "Kamis",
+      "waktu": "13.00-17.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880e1f70631fb1393aab14",
+      "hari": "Kamis",
+      "waktu": "19.30-22.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880e2f70631fb1393aab16",
+      "hari": "Jum'at",
+      "waktu": "07.00-11.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880e3870631fb1393aab18",
+      "hari": "Jum'at",
+      "waktu": "13.30-17.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880e4770631fb1393aab1a",
+      "hari": "Jum'at",
+      "waktu": "19.00-21.30",
+      "__v": 0
+    },
+    {
+      "_id": "63880e5f70631fb1393aab1c",
+      "hari": "Sabtu",
+      "waktu": "09.00-20.00",
+      "__v": 0
+    },
+    {
+      "_id": "63880e6770631fb1393aab1e",
+      "hari": "Minggu",
+      "waktu": "09.00-20.00",
+      "__v": 0
+    }
+  ],
+  "message": "Get All data Jadwal Successfully"
+}
+```
+
+---
+
+## Get Jadwal By Id
+
+_Request:_
+
+- Method: GET
+- Endpoint: /jadwal/byId
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+
+_Response_
+
+```
+{
+  "success": true,
+  "data": {
+    "_id": "63880db470631fb1393aab06",
+    "hari": "Selasa",
+    "waktu": "18.30.00-22.00",
+    "__v": 0
+  },
+  "message": "Get Jadwal Success"
+}
+```
+
+---
+
+## Delete Jadwal
+
+_Request:_
+
+- Method: DELETE
+- Endpoint: /jadwal/byId?
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+
+_Response_
+
+```
+{
+  "success": true,
+  "data": {
+    "_id": "63880db170631fb1393aab04",
+    "hari": "Selasa",
+    "waktu": "18.3.00-22.00",
+    "__v": 0
+  },
+  "message": "Data Jadwal delete"
+}
+```
+
+---
+
+## Update Jadwal
+
+_Request:_
+
+- Method: POST
+- Endpoint: /jadwal/byId?
+- Header:
+  - Content-Type: Application/json
+  - Accept: Application/json
+  - Authorization : bearer [jwt]
+- Body
+
+```
+{
+    "hari": "Minggu",
+    "waktu": "09.00-17.00"
+}
+```
+
+_Response_
+
+```
+{
+  "data": {
+    "_id": "63880e6770631fb1393aab1e",
+    "waktu": "09.00-17.00",
+    "__v": 0,
+    "hari": "Minggu"
+  },
+  "message": "Update data jadwal is succes"
+}
+```
+
+---
